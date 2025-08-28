@@ -1,0 +1,53 @@
+---
+title: "Reading Assignment 2"
+author: "Andrew Shaw"
+date: "2025-08-23"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### 1.	Make up your own estimator for the population mean that is not the sample average. Why is the sample average better?
+
+If you took only the even-numbered observations of a sample, this would not only halve the total observations it would also double the variance of the sample making it less efficient than the sample mean, $\bar{Y}$.
+
+e.g. $$\hat{\mu}_{even} = \frac{1}{n/2} \sum_{i=1}^{n/2} Y_{2i}$$
+
+### 2. Describe in your own words the difference between estimators that are unbiased versus consistent.
+
+The difference between the two is unbiased refers to repeated sampling of a set number of observations where as consistency concerns estimator's performance in a single sample as the number of observations increase. Both properties state how estimators converge to the true population mean. 
+
+### 3.	What is an estimator for the population mean that is unbiased but not consistent? Explain in your own words. Do not use an example from the text.
+
+If there is additional information but the estimator doesn't use them, say if there were 1000 surveys sent for graduate students but only 5 were analyzed would be unbiased but not consistent. 
+
+
+### 4.	What is an estimator for the population mean that is biased but consistent? Explain in your own words.
+
+Alternatively, if you used all 1000 of the survey observations but the surveys were only sent to graduate students in Ivan Allen would be biased because it does not include all graduate students at Georgia Tech. So the population mean would be consistent but would converge to the true mean of Ivan Allen graduate students not all graduate students
+
+
+### 5.	Is the median an unbiased estimate of the population mean? What about a consistent estimator?
+
+Yes, the median is a measure of central tendency so taken over many samples it would be both consistent and unbiased but it would have higher variance than $\bar{Y}$
+
+### 6.	Suppose I tell you my estimator is efficient. Explain why this statement doesn’t make any sense.
+
+Efficient as compared to what? Efficiency of an estimator requires its variance be compared to the variance of another estimator. 
+
+### 7.	What is a BLUE estimator? 
+
+'Best Linear Unbiased Estimator' for the class of estimators that are linear and unbiased. The sample mean $\bar{Y}$ is BLUE making it the most efficient estimator for unbiased and linear estimators of population mean. 
+
+### 8.	The sample mean is the best least squares estimator of the population mean. What does this mean?
+
+Because $\bar{Y}$ contains the most information about the sample that is unbiased, consistent, and more efficient than other estimators of population mean, the sample mean is the best estimator minimizing deviations from the sample mean meaning a more accurate summary of variance of true population mean. 
+
+### 9.	The president of the United States is sure that they will win re-election because he tweeted out a poll that read “Will you vote for me in the coming election?”, and 85% of respondents said yes. The sample size was 1 million people. Is this an unbiased estimate of the percent of voters that would vote for the president in the upcoming election?
+
+No, for a few reasons. First, the poll was conducted on social media where presumably most people who see or would respond to that poll actively follow him therefore already likely to vote for him. The sample also comes from people who are on social media excluding the rest of eligible voting population. So, this poll is biased toward the president. 
