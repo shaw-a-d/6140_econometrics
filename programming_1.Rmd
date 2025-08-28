@@ -1,0 +1,130 @@
+---
+title: "programming_1"
+author: "Andrew Shaw"
+date: "2025-08-28"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(truncnorm)
+rm(list = ls())
+set.seed(4289)
+```
+
+# Data creation
+This step creates a random variable with half of the observations centered at 2 with standard deviation 1 and half centered at 6 with standard deviation 1/2.
+
+```{r data creation}
+
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=1),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=0.5)) 
+
+# Summary
+mean(x)
+sd(x)
+hist(x,breaks=18, freq=FALSE, xlim=c(-1,8),
+     main = "Bimodal (original)",
+     sub = "mean: 2, sd: 1, mean: 6, sd = 0.5")
+```
+
+# Problem 1
+What happens to the probability density function as the standard deviation of either of the peaks changes in the step 1? What happens to the SD. of X as the means change? Play around with the means and standard deviations to see.
+
+```{r sd shift}
+
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=3),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=0.01))
+mean(x)
+sd(x)
+hist(x, breaks = 18, freq = FALSE, xlim = c(-1,10),
+     main = "Bimodal (sd shift)",
+     sub = "mean: 2, sd: 3, mean: 6, sd = 0.01")
+```
+
+```{r mean shift}
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=1, sd=1),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=8, sd=0.5))
+mean(x)
+sd(x)
+hist(x, breaks = 18, freq = FALSE, xlim = c(-1,10),
+     main = "Bimodal (mean shift)",
+     sub = "mean: 1, sd: 1, mean: 8, sd = 0.5")
+```
+
+If the means get farther apart, the standard deviation begins to rise and conversely if the means begin to converge, the standard deviation shrinks. This changes the shape of the distribution so that with a larger deviation, the peaks become flatter. 
+As the standard deviations get smaller, the means converge toward the true mean of 4 if the peaks of the distribution are 2 and 6. Regardless of how the deviations move, the mean stays around the mean of the two distributions with subtle shifts. 
+
+
+# Problem 2
+Pictured is a bimodal distribution, make a trimodal distribution. A trimodal distribution has three peaks.
+
+```{r trimodal}
+trimodal <- c(rtruncnorm(500, a = -Inf, b = Inf, mean = 2, sd = 1),
+              rtruncnorm(500, a = -Inf, b = Inf, mean = 6, sd = 0.5),
+              rtruncnorm(500, a = -Inf, b = Inf, mean = 12, sd = 1.5))
+
+hist(trimodal, freq = FALSE, breaks = 18)
+```
+
+# Problem 3
+Compute the correlation of x and y. What happens to the correlation of x and y as the SD of X increases?
+
+
+
+
+```{r correlation}
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=1),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=0.5)) 
+
+nn <- length(x)
+e <- rnorm(nn, 0, 3)
+y <- 2*x+e
+
+cor(x,y)
+```
+```{r correlation}
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=3),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=3)) 
+
+nn <- length(x)
+e <- rnorm(nn, 0, 3)
+y <- 2*x+e
+
+cor(x,y)
+```
+# Monte Carlo Simulation
+
+```{r Monte Carlo setup}
+# observations per peak
+nn <- 3
+# no. of runs
+runs <- 3
+
+# function
+bimodal.run <- function() {
+  x <- c(rtruncnorm(nn, a = -Inf, b = Inf, mean = 2, sd = 10),
+         rtruncnorm(nn, a = -Inf, b = Inf, mean =8, sd = 10))
+  e <- rnorm(nn,0,3)
+  y <- 2*x+e
+  mean.x <- mean(x)
+  return(mean.x)
+}
+```
+
+```{r Simulation}
+sims <- replicate(runs, bimodal.run())
+
+hist(sims)
+
+hist(data$x)
+
+cor(data$x, data$y)
+plot(data$x,data$y,main="Scatterplot Example",xlab="x", ylab="y",pch=19)
+
+lm(data$y~data$x)
+```
+
+
+<!-- note to self. make global list for x and y and put them in a data frame.....
+-->
