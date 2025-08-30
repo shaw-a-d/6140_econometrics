@@ -1,10 +1,10 @@
 ---
-title: "programming_1"
+title: "programming_assignment_1"
 author: "Andrew Shaw"
 date: "2025-08-28"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -124,17 +124,17 @@ hist(sims)
 ```
 
 
-```{r Monte Carlo - higher runs}
+```{r Monte Carlo - extreme means}
 # observations per peak
-nn <- 3
+nn <- 5000
 # no. of runs
-runs <- 10000
+runs <- 5
 
 
 # function
 bimodal.run <- function() {
-  x <<- c(rtruncnorm(nn, a = -Inf, b = Inf, mean = 2, sd = 10),
-         rtruncnorm(nn, a = -Inf, b = Inf, mean = 8, sd = 10))
+  x <<- c(rtruncnorm(nn, a = -Inf, b = Inf, mean = 0, sd = 10),
+         rtruncnorm(nn, a = -Inf, b = Inf, mean = 50, sd = 10))
   e <- rnorm(nn,0,3)
   y <- 2*x+e
   mean.x <- mean(x)
@@ -148,4 +148,4 @@ hist(sims)
 # Problem 4
 What parameters effect how fast the sampling distribution becomes normal? (Hint: play with the parameters until your histogram looks normal)
 
-Both the number of observations per sample and number of sample runs affect the shape of the distribution but in different ways. The sample size for each run really controls the convergence of the sample means to normal distribution even though the original distribution is non-normal as it's bimodal. So even with lots of observations but few runs, the histogram looks jagged. When the runs are increased, the more sample means are taken and the normal distribution comes into focus. 
+Both the number of observations per sample and number of sample runs affect the shape of the distribution but in different ways. The sample size for each run really controls the convergence of the sample means to normal distribution even though the original distribution is non-normal as it's bimodal. So even with lots of observations but few runs, the histogram looks jagged. When the runs are increased, the more sample means are taken and the normal distribution comes into focus. Splitting the means even farther highlights the importance of *n* as with 5000 runs and 5 observations the range of values spread from 15-35 while with 5 runs and 5000 observations the histogram more tightly centers on the true mean with values ranging from 24.8 - 25.2. So increasing *n* drives the convergence while more sample runs reveals the shape. 
