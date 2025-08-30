@@ -2,11 +2,13 @@
 title: "programming_1"
 author: "Andrew Shaw"
 date: "2025-08-28"
-output: word_document
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(truncnorm)
 rm(list = ls())
 set.seed(4289)
@@ -73,7 +75,7 @@ Compute the correlation of x and y. What happens to the correlation of x and y a
 
 
 
-```{r correlation}
+```{r correlation, x original}
 x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=1),
        rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=0.5)) 
 
@@ -83,9 +85,9 @@ y <- 2*x+e
 
 cor(x,y)
 ```
-```{r correlation}
-x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=3),
-       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=3)) 
+```{r correlation, x large}
+x <- c(rtruncnorm(500, a=-Inf, b=Inf, mean=2, sd=50),
+       rtruncnorm(500, a=-Inf, b=Inf, mean=6, sd=50)) 
 
 nn <- length(x)
 e <- rnorm(nn, 0, 3)
@@ -93,38 +95,57 @@ y <- 2*x+e
 
 cor(x,y)
 ```
-# Monte Carlo Simulation
 
-```{r Monte Carlo setup}
+As the standard deviation of x increases the correlation coefficient begins to approach 1. When the standard deviation of x is lower than the error term, e, the noise from the error term is greater than the signal from the x,y relationship pulling down the correlation coefficient. 
+
+
+### Monte Carlo Simulation
+
+```{r Monte Carlo - more observations}
 # observations per peak
-nn <- 3
+nn <- 5000
 # no. of runs
-runs <- 3
+runs <- 30
 
 # function
 bimodal.run <- function() {
   x <- c(rtruncnorm(nn, a = -Inf, b = Inf, mean = 2, sd = 10),
-         rtruncnorm(nn, a = -Inf, b = Inf, mean =8, sd = 10))
+         rtruncnorm(nn, a = -Inf, b = Inf, mean = 8, sd = 10))
   e <- rnorm(nn,0,3)
   y <- 2*x+e
   mean.x <- mean(x)
   return(mean.x)
 }
-```
-
-```{r Simulation}
 sims <- replicate(runs, bimodal.run())
 
 hist(sims)
 
-hist(data$x)
 
-cor(data$x, data$y)
-plot(data$x,data$y,main="Scatterplot Example",xlab="x", ylab="y",pch=19)
-
-lm(data$y~data$x)
 ```
 
 
-<!-- note to self. make global list for x and y and put them in a data frame.....
--->
+```{r Monte Carlo - higher runs}
+# observations per peak
+nn <- 3
+# no. of runs
+runs <- 10000
+
+
+# function
+bimodal.run <- function() {
+  x <<- c(rtruncnorm(nn, a = -Inf, b = Inf, mean = 2, sd = 10),
+         rtruncnorm(nn, a = -Inf, b = Inf, mean = 8, sd = 10))
+  e <- rnorm(nn,0,3)
+  y <- 2*x+e
+  mean.x <- mean(x)
+  return(mean.x)
+}
+sims <- replicate(runs, bimodal.run())
+
+hist(sims)
+```
+
+# Problem 4
+What parameters effect how fast the sampling distribution becomes normal? (Hint: play with the parameters until your histogram looks normal)
+
+Both the number of observations per sample and number of sample runs affect the shape of the distribution but in different ways. The sample size for each run really controls the convergence of the sample means to normal distribution even though the original distribution is non-normal as it's bimodal. So even with lots of observations but few runs, the histogram looks jagged. When the runs are increased, the more sample means are taken and the normal distribution comes into focus. 
