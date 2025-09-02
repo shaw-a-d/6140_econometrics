@@ -5,3 +5,9 @@
 
 install.packages("survey")
 library(survey)
+
+load("data/nyts2019.rdata")
+attach(nyts2019)
+
+
+View(nyts2019)
