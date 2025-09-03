@@ -4,7 +4,7 @@ library("survey")
 # Load the 2019 National Youth Tobacco Survey.
 You should reference a particular file including the path or change the working directory. Note this is already an R formatted dataset. You could also open an excel, fixed width, or any other formatted 
 
-load(file ="C:/Users/danie/Desktop/nyts2019.rdata")
+load(file ="data/nyts2019.rdata")
 attach(nyts2019)
 
 #Problem 1: 
