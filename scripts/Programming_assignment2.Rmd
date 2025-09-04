@@ -6,6 +6,7 @@ You should reference a particular file including the path or change the working 
 
 load(file ="data/nyts2019.rdata")
 attach(nyts2019)
+View(nyts2019)
 
 #Problem 1: 
 Generate a variable that will be a 1/0 variable, otherwise known as a dummy variable that will be 1 if a student has used ecigarettes in the past 30 days and 0 if they have not used ecigarettes in the past 30 days. Make a decision about how to treat missing. Be careful of the skip pattern (See question 37 and 34 from the codebook).
