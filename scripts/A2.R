@@ -2,12 +2,9 @@
 # 9-2-2025
 # A2 script
 
-
-install.packages("survey")
 library(survey)
-install.packages("tidyverse")
 library(tidyverse)
-install.packages('dplyr')
+load(file ="data/nyts2019.rdata")
 attach(nyts2019)
 
 rm(list = ls())
@@ -63,14 +60,16 @@ df_clean <- df |>
   filter(!(Q34 == ".N"))
 
 
-df_dummy$dummy <- df_clean |>
-  ifelse(Q34 == "01" & Q37 > "00", 1, 0)
+df_dummy <- function(data, col1, col2) {
+  n <- count(data)
+  dummy <- vector("numeric", 0L)
+  data$dummy <- ifelse(data$col1 == "01" & data$col2 > "00", 1, 0)
+  
+}
 
-View(df_dummy)
 df_dummy(df_clean)
 
-
-
+v
 
 
   
