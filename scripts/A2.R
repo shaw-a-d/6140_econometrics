@@ -4,10 +4,13 @@
 
 library(survey)
 library(tidyverse)
+
+rm(list = ls())
+
 load(file ="data/nyts2019.rdata")
 attach(nyts2019)
 
-rm(list = ls())
+
 
 df <- nyts2019[c("psu", "StudentLoginID", "Q34", "Q37")]
 
@@ -51,27 +54,32 @@ str(df)
 # if obs 34 = 01 & 37 = ".N", drop
 # drop 34 = 01 and 37 > "0" 
 # if 34 = 01 and 37 >= 1 then dummy == 1
-count(df)
+
 
 df_clean <- df |>
   filter(!(Q34 == "02" & Q37 == "06")) |>
   filter(!(Q34 == "01" & Q37 == ".N")) |>
   filter(!(Q34 == ".Z" & Q37 == ".Z")) |>
+  filter(!Q37 > "30") |>
   filter(!(Q34 == ".N"))
 
 
-df_dummy <- function(data, col1, col2) {
-  n <- count(data)
-  dummy <- vector("numeric", 0L)
-  data$dummy <- ifelse(data$col1 == "01" & data$col2 > "00", 1, 0)
-  
-}
+df_dummy <- df_clean |>
+  mutate(dummy = ifelse(Q34 == "01" & Q37 > "00", 1, 0))
 
-df_dummy(df_clean)
+View(df_dummy)
 
-v
+table(df_dummy$dummy)
+
+mean(df_dummy$dummy)
+
+se <- sd(df_dummy$dummy)/sqrt(length(df_dummy$dummy))
+
+mean(df_dummy$dummy) - 1.96*se
 
 
-  
-  
+result <- t.test(df_dummy$dummy, conf.level = 0.95)
 
+print(result)
+
+mean(df_dummy$dummy)
