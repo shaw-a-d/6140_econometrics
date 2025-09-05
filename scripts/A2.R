@@ -83,3 +83,16 @@ result <- t.test(df_dummy$dummy, conf.level = 0.95)
 print(result)
 
 mean(df_dummy$dummy)
+n <- length(df_dummy$dummy)
+x <- sum(df_dummy$dummy)
+?binom.test()
+
+binom.test(x, n,  p = 0.15, alternative = "two.sided",
+           conf.level = 0.95)
+
+se <- sqrt(((x/n)*(1-(x/n)))/n)
+
+1.96*se + (x/n)
+
+prop.test(x, n, p=0.15, alternative = "two.sided",
+          conf.level = 0.95)
