@@ -51,7 +51,8 @@ dplyr::count(df_dummy, Q34, dummy)
 x <- sum(df_dummy$dummy)
 n <- nrow(df_dummy)
 
-results <- binom.test(x, n, p=0.19, alternative = "two.sided",
+results <- binom.test(x, n, p=0.20, alternative = "two.sided",
                       conf.level = 0.95)
 
-results
+prop.test(x, n, p = 0.20, alternative = "two.sided",
+          conf.level = 0.95)
