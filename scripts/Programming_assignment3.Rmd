@@ -1,0 +1,35 @@
+---
+title: "Your 3rd Programming Assignment"
+author: "Insert your name here"
+date: "Insert the date here"
+output: 
+  pdf_document:
+  toc: false
+  toc_depth: 2
+---
+
+### Create a table that shows the means of ecig use by each category and shows the p-value of a t-test from a two-sample difference test for the following categories. Use R-Markdown to complete the assignment.
+
+1. Male versus female
+2. 12th versus 9th grade
+3. Hispanic versus non-hispanic
+4. Black versus non-black
+5. White versus non-white
+6. Smokers versus non-smokers
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+###This is where your data cleaning code and table creating code can go.
+
+
+```
+
+### This is where your table displaying code can go.
+
+
+```{r eciguse}
+
+```
+
+### Write a short paragraph about the results from the table just create
