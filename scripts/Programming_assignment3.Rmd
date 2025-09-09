@@ -33,3 +33,5 @@ rm(list=ls())
 ```
 
 ### Write a short paragraph about the results from the table just create
+
+?t.test()
