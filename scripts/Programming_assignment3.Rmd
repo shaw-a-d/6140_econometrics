@@ -10,8 +10,8 @@ output:
 
 ### Create a table that shows the means of ecig use by each category and shows the p-value of a t-test from a two-sample difference test for the following categories. Use R-Markdown to complete the assignment.
 
-1. Male versus female
-2. 12th versus 9th grade (QN3)
+1. Male versus female # Q2 & Q34
+2. 12th versus 9th grade # QN3 & Q34
 3. Hispanic versus non-hispanic
 4. Black versus non-black
 5. White versus non-white
