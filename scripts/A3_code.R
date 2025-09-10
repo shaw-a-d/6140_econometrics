@@ -5,8 +5,8 @@ library(survey)
 library(dplyr)
 library(tidyverse)
 library(styler)
-
-
+library(gtsummary)
+library(arsenal)
 
 
 load("data/nyts2019.rdata")
@@ -31,16 +31,20 @@ df_clean <- df |>
   filter(Q2 %in% c("01", "02"))
 
 View(df_clean)
-rm(df_group)
 
 df_group <- df_clean |>
   mutate(Q34 = ifelse(Q34 == "02", 0, 1)) |>
   mutate(Q34 = as.numeric(Q34), Q2 = as.numeric(Q2)) |>
-  rename(sex = Q2, smoke = Q34) |>
-  group_by(sex, smoke)
+  rename(sex = Q2, smoke = Q34)
 
 View(df_group)
 
-t.test(smoke ~ sex, data = df_group, mu = 0, alternative = "two.sided")
+results <- t.test(smoke ~ sex,
+  data = df_group, mu = 0,
+  alternative = "two.sided"
+)
+View(df_group)
+results
 
-# just need to figure out how to do table now
+
+
