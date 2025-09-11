@@ -21,8 +21,7 @@ df <- nyts2019
 
 ## Cleaned to 18907 students
 df_filter <- df |>
-  mutate(days = if_else((Q34 == "02" & Q37 == ".S"), 0,
-  as.numeric(Q37))) |>
+  mutate(days = if_else((Q34 == "02" & Q37 == ".S"), 0, as.numeric(Q37))) |>
   filter(Q34 == "01" | Q34 == "02") |>
   filter(!(Q34 == "02" & days == 6)) |>
   filter(days <= 30) |>
@@ -53,7 +52,7 @@ results_sex
 dplyr::count(df_filter, days)
 
 #Grade - clean table
-df_grade <- df_filter |> 
+df_grade <- df_filter |>
   filter(Q3 %in% c("07", "04")) |>
   rename(grade = Q3) |>
   mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
@@ -74,7 +73,9 @@ df_hispanic <- df_filter |>
 View(df_hispanic)
 dplyr::count(df_hispanic, hispanic, ecig_use)
 
-results_hispanic <- t.test(ecig_use ~ hispanic, data = df_hispanic, alternative = "two.sided", mu = 0)
+results_hispanic <- t.test(ecig_use ~ hispanic,
+  data = df_hispanic, alternative = "two.sided", mu = 0
+)
 
 results_hispanic
 
@@ -88,7 +89,10 @@ df_black <- df_filter |>
 
 dplyr::count(df_race, race, ecig_use)
 
-results_black <- t.test(ecig_use ~ race, data = df_race, alternative = "two.sided", mu = 0)
+results_black <- t.test(ecig_use ~ race,
+  data = df_race,
+  alternative = "two.sided", mu = 0
+)
 
 
 # White v. Other
@@ -100,7 +104,9 @@ df_white <- df_filter |>
 
 dplyr::count(df_white, white, ecig_use)
 
-results_white <- t.test(ecig_use ~ white, data = df_white, alternative = "two.sided", mu = 0)
+results_white <- t.test(ecig_use ~ white,
+  data = df_white, alternative = "two.sided", mu = 0
+)
 
 results_white
 
@@ -117,6 +123,9 @@ df_smoker <- df_filter |>
 
 dplyr::count(df_smoker, ecig_use, Q9)
 
-results_smoker <- t.test(ecig_use ~ smoker, data = df_smoker, alternative = "two.sided", mu = 0)
+results_smoker <- t.test(ecig_use ~ smoker,
+  data = df_smoker,
+  alternative = "two.sided", mu = 0
+)
 
 results_smoker
