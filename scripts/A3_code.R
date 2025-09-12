@@ -7,13 +7,14 @@ library(tidyverse)
 library(styler)
 library(gtsummary)
 library(arsenal)
-
+library(janitor)
+rm(list = ls())
 
 load("data/nyts2019.rdata")
 attach(nyts2019)
 
 
-df <- nyts2019
+df <- clean_names(nyts2019)
 
 
 
@@ -21,22 +22,24 @@ df <- nyts2019
 
 ## Cleaned to 18907 students
 df_filter <- df |>
-  mutate(days = if_else((Q34 == "02" & Q37 == ".S"), 0, as.numeric(Q37))) |>
-  filter(Q34 == "01" | Q34 == "02") |>
-  filter(!(Q34 == "02" & days == 6)) |>
-  filter(days <= 30) |>
-  filter(Q2 %in% c("01", "02"))
+  mutate(days_used = if_else((q34 == "02" & q37 == ".S"), 0, as.numeric(q37))) |>
+  filter(q34 == "01" | q34 == "02") |>
+  filter(!(q34 == "02" & days_used == 6)) |>
+  filter(days_used <= 30) |>
+  filter(q2 %in% c("01", "02"))
 
+dplyr::count(df_filter, q34, q37, days_used)
+nrow(df_filter)
 # 01 = Male, 02 = Female, e-cig 01 = Yes, 02 = No
 df_clean <- df_filter |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
   mutate(Q2 = ifelse(Q2 == "01", "Male", "Female")) |>
   rename(sex = Q2) |>
-  select(sex, current_user, days)
+  select(sex, current_user, days_used)
 
 #Check freq table
 View(df_clean)
-dplyr::count(df_clean, sex, current_user, days)
+dplyr::count(df_clean, sex, current_user, days_used)
 nrow(df_clean)
 
 
@@ -49,13 +52,13 @@ sum(df_clean$sex == "Female")
 
 results_sex
 
-dplyr::count(df_filter, days)
+dplyr::count(df_filter, days_used)
 
 #Grade - clean table
 df_grade <- df_filter |>
   filter(Q3 %in% c("07", "04")) |>
   rename(grade = Q3) |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
   select(grade, ecig_use) |>
   mutate(grade = ifelse(grade == "07", "12th", "9th"))
 
@@ -63,11 +66,23 @@ df_grade <- df_filter |>
 results_grade <- t.test(ecig_use ~ grade, data = df_grade)
 
 
+dplyr::count(df_filter, q4a, q4b)
+df_histest <- df_filter |>
+  mutate(hispanic = case_when(
+    q4a == "1" ~ "Other", q4a == "NA" ~ "Hispanic",
+    TRUE ~ q4a
+  ), ecig_use = case_when(days_used == 0 ~ 0, TRUE ~ 1)) |>
+  filter(hispanic %in% c("Hispanic", "Other")) |>
+  select(hispanic, ecig_use, days_used)
+
+View(df_histest)
+dplyr::count(df_histest, hispanic, ecig_use)
+
 ## Hispanic v. Other
 df_hispanic <- df_filter |>
-  filter(!(Q4A == ".N")) |>
-  mutate(hispanic = ifelse(Q4A == "1", "Hispanic", "Other")) |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
+  filter(!(q4a == ".N")) |>
+  mutate(hispanic = ifelse(q4a == "1", "Other", "Hispanic")) |>
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
   select(hispanic, ecig_use)
 
 View(df_hispanic)
@@ -84,8 +99,8 @@ results_hispanic
 df_black <- df_filter |>
   filter(!(Q5A == ".N")) |>
   mutate(black = ifelse(Q5C == "1", "Black", "Other")) |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
-  select(black, days, ecig_use)
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
+  select(black, days_used, ecig_use)
 
 dplyr::count(df_race, race, ecig_use)
 
@@ -99,7 +114,7 @@ results_black <- t.test(ecig_use ~ race,
 df_white <- df_filter |>
   filter(!(Q5A == ".N")) |>
   mutate(white = ifelse(Q5E == "1", "White", "Other")) |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
   select(white, ecig_use)
 
 dplyr::count(df_white, white, ecig_use)
@@ -118,8 +133,8 @@ df_smoker <- df_filter |>
   filter(!(Q6 == "01" & Q9 == ".S")) |>
   mutate(Q9 = ifelse(Q9 == ".S", 0, as.numeric(Q9))) |>
   mutate(smoker = ifelse(Q9 > 0, "Smoker", "Non-Smoker")) |>
-  mutate(ecig_use = ifelse(days > 0, 1, 0)) |>
-  select(smoker, ecig_use, days, Q9)
+  mutate(ecig_use = ifelse(days_used > 0, 1, 0)) |>
+  select(smoker, ecig_use, days_used, Q9)
 
 dplyr::count(df_smoker, ecig_use, Q9)
 
@@ -129,3 +144,5 @@ results_smoker <- t.test(ecig_use ~ smoker,
 )
 
 results_smoker
+
+?coalesce()
