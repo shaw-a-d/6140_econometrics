@@ -22,7 +22,8 @@ df <- clean_names(nyts2019)
 
 ## Cleaned to 18907 students
 df_filter <- df |>
-  mutate(days_used = if_else((q34 == "02" & q37 == ".S"), 0, as.numeric(q37))) |>
+  mutate(days_used = if_else((q34 == "02" & q37 == ".S"), 0,
+  as.numeric(q37))) |>
   filter(q34 == "01" | q34 == "02") |>
   filter(!(q34 == "02" & days_used == 6)) |>
   filter(days_used <= 30) |>
