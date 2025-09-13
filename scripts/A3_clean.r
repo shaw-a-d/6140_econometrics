@@ -39,10 +39,6 @@ df_ecigusers <- df |>
     as.numeric(current_user)
   )
 
-nrow(df_ecigusers)
-View(df_ecigusers)
-
-
 # Populations Male and Female (from q2)
 # 108 non-responsive
 
@@ -72,8 +68,6 @@ df_hispanic <- df_ecigusers |>
   )) |>
   select(student_login_id, current_user, hispanic)
 
-dplyr::count(df_white, current_user, white)
-
 results_hispanic <- t.test(current_user ~ hispanic, data = df_hispanic)
 
 # Populations Black and Non-black (from q5a:q5e)
@@ -97,8 +91,6 @@ results_white
 # Populations Smokers and Non-Smokers (from q9)
 
 
-class(df_ecigusers$q9)
-
 df_smoker <- df_ecigusers |>
   filter(!(q9 == ".N")) |>
   mutate(
@@ -110,20 +102,6 @@ df_smoker <- df_ecigusers |>
 
 results_smoker <- t.test(current_user ~ smoker, data = df_smoker)
 
-results_sex
-master_df <- df_ecigusers |>
-  left_join(df_sex, by = "student_login_id") |>
-  left_join(df_grade, by = "student_login_id") |>
-  left_join(df_hispanic, by = "student_login_id") |>
-  left_join(df_black, by = "student_login_id") |>
-  left_join(df_white, by = "student_login_id") |>
-  left_join(df_smoker, by = "student_login_id")
-
-
-master_df <- master_df |>
-  select(current_user, sex.y, grade, hispanic, white,
-         black, smoker, student_login_id) |>
-  rename(sex = sex.y)
 
 results_list <- list(
   Sex = results_sex,
@@ -153,5 +131,3 @@ table_black <- make_table(results_list[[4]], "Black", "Non-Black", "E-cigarette 
 table_white <- make_table(results_list[[5]], "White", "Non-White", "E-cigarette Use by White & Non-White")
 table_smoker <- make_table(results_list[[6]], "Smokers", "Non-Smokers", "E-cigarette Use by Smokers & Non-Smokers")
 
-table_smoker
-results_smoker
