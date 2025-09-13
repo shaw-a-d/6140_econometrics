@@ -1,19 +1,35 @@
-# Andrew Shaw
-# final clean code for A3
-# 9.12
+---
+title: "Programming Assignment 3"
+author: "Andrew Shaw"
+date: "09.11.25"
+output: 
+  pdf_document: default
+  toc: false
+  toc_depth: 2
+---
+
+### Create a table that shows the means of ecig use by each category and shows the p-value of a t-test from a two-sample difference test for the following categories. Use R-Markdown to complete the assignment.
+
+1. Male versus female # Q2 & Q34
+2. 12th versus 9th grade # QN3 & Q34
+3. Hispanic versus non-hispanic
+4. Black versus non-black
+5. White versus non-white
+6. Smokers versus non-smokers
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
 
 rm(list = ls())
-
-library(dplyr)
-library(tidyverse)
 library(janitor)
+library(dplyr)
 library(survey)
-library(gtsummary)
 library(gt)
-library(broom)
 library(survival)
+###This is where your data cleaning code and table creating code can go.
 
-load("data/nyts2019.rdata")
+load("nyts2019.rdata")
 attach(nyts2019)
 
 
@@ -38,10 +54,6 @@ df_ecigusers <- df |>
     current_user = case_when(days_used > 0 ~ 1, TRUE ~ 0),
     as.numeric(current_user)
   )
-
-nrow(df_ecigusers)
-View(df_ecigusers)
-
 
 # Populations Male and Female (from q2)
 # 108 non-responsive
@@ -72,8 +84,6 @@ df_hispanic <- df_ecigusers |>
   )) |>
   select(student_login_id, current_user, hispanic)
 
-dplyr::count(df_white, current_user, white)
-
 results_hispanic <- t.test(current_user ~ hispanic, data = df_hispanic)
 
 # Populations Black and Non-black (from q5a:q5e)
@@ -93,11 +103,7 @@ df_white <- df_ecigusers |>
   select(student_login_id, current_user, white)
 
 results_white <- t.test(current_user ~ white, data = df_white)
-results_white
 # Populations Smokers and Non-Smokers (from q9)
-
-
-class(df_ecigusers$q9)
 
 df_smoker <- df_ecigusers |>
   filter(!(q9 == ".N")) |>
@@ -110,20 +116,6 @@ df_smoker <- df_ecigusers |>
 
 results_smoker <- t.test(current_user ~ smoker, data = df_smoker)
 
-results_sex
-master_df <- df_ecigusers |>
-  left_join(df_sex, by = "student_login_id") |>
-  left_join(df_grade, by = "student_login_id") |>
-  left_join(df_hispanic, by = "student_login_id") |>
-  left_join(df_black, by = "student_login_id") |>
-  left_join(df_white, by = "student_login_id") |>
-  left_join(df_smoker, by = "student_login_id")
-
-
-master_df <- master_df |>
-  select(current_user, sex.y, grade, hispanic, white,
-         black, smoker, student_login_id) |>
-  rename(sex = sex.y)
 
 results_list <- list(
   Sex = results_sex,
@@ -146,12 +138,30 @@ make_table <- function(result, group1, group2, title) {
     fmt_number(columns = "% E-cig users", decimals = 1)
 }
 
+
 table_sex <- make_table(results_list[[1]], "Female", "Male", "E-cigarette Use by Sex")
 table_grade <- make_table(results_list[[2]], "9th", "12th", "E-cigarette Use by Grade")
 table_hispanic <- make_table(results_list[[3]], "Hispanic", "Non-Hispanic", "E-cigarette Use by Hispanic & Non-Hispanic")
 table_black <- make_table(results_list[[4]], "Black", "Non-Black", "E-cigarette Use by Black & Non-Black")
-table_white <- make_table(results_list[[5]], "White", "Non-White", "E-cigarette Use by White & Non-White")
+table_white <- make_table(results_list[[5]], "Non-White", "White", "E-cigarette Use by White & Non-White")
 table_smoker <- make_table(results_list[[6]], "Smokers", "Non-Smokers", "E-cigarette Use by Smokers & Non-Smokers")
 
+
+```
+
+# Tables
+```{r eciguse}
+table_sex
+table_grade
+table_hispanic
+table_black
+table_white
 table_smoker
-results_smoker
+
+
+```
+
+### Summary
+
+Throughout all the various populations observed, all six were found to be statistically significant to varying degrees. The groups with the largest differences between the observed populations were; smokers and non-smokers, 9th and 12th graders, Black and non-Black, and White & non-White. The tests for male and female, and Hispanic and non-Hispanic, were statistically significant but less so than the other groups with p-values of 0.0214 and 0.0187, respectively. This represents a 2% probability that the difference in males' higher usage rates from women is due to random variation. Given the large sample size of the data across all subgroups, there is a significant amount of data to detect differences among these populations. 
+
