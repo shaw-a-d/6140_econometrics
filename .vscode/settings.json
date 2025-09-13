@@ -1,0 +1,8 @@
+{
+  "workbench.tree.renderIndentGuides": "none",
+  "editor.autoIndentOnPaste": true,
+  "editor.guides.indentation": false,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.wordWrap": "on"
+}

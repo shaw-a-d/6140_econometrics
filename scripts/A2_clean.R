@@ -6,7 +6,7 @@ library(janitor)
 
 rm(list = ls())
 
-load(file ="data/nyts2019.rdata")
+load(file = "data/nyts2019.rdata")
 attach(nyts2019)
 
 df <- nyts2019[c("StudentLoginID", "Q34", "Q37")]
@@ -17,14 +17,13 @@ dplyr::count(df, Q34, Q37)
 
 ## drop combinations of .N and .Z
 # 30(N,.N), 3(.N, 00), 1(.N,02), 12 (.Z,.Z)
-## Total 
+## Total
 
 df_new <- df |>
-  mutate(
-    days = if_else((Q34 == "02" & Q37 == ".S"), 0, as.numeric(Q37))) |>
+  mutate(days = if_else((Q34 == "02" & Q37 == ".S"), 0, as.numeric(Q37))) |>
   filter(Q34 == "01" | Q34 == "02")
 
-View(df_new)
+
 
 
 # Check for any remaining invalid combinations before applying dummy
@@ -41,7 +40,6 @@ df_dummy <- df_new |>
   mutate(
     dummy = if_else(days %in% 1:30, 1, 0)
   )
-  
 dplyr::count(df_dummy, Q34, dummy)
 
 
@@ -51,7 +49,7 @@ dplyr::count(df_dummy, Q34, dummy)
 x <- sum(df_dummy$dummy)
 n <- nrow(df_dummy)
 
-results <- binom.test(x, n, p=0.20, alternative = "two.sided",
+results <- binom.test(x, n, p = 0.20, alternative = "two.sided",
                       conf.level = 0.95)
 
 prop.test(x, n, p = 0.20, alternative = "two.sided",
