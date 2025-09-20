@@ -1,0 +1,40 @@
+---
+title: "Reading Assignment 6"
+author: "Andrew Shaw"
+date: "09-20-2025"
+output: 
+  pdf_document: default
+---
+
+# Reading: Stock & Watson 6.1-6.4 
+## 1. What are the two requirements for omitted variable bias to be a problem?
+
+## 2. What is the formula for omitted variable bias?
+## 3. How can we lower omitted variable bias without running a multiple regression model?
+## 4. Write a linear equation that relates wages to gender, age and education. Take a guess for the likely signs of each of these variables.
+## 5. What variables might be omitted from your equation that could be biasing the effect of gender on wages?
+## 6. Right down the term for bias created by what you left out.
+## 7. How can we remedy this situation and find a better estimate of the effect of gender on wages?
+## 8. How can we minimize errors in this multiple variable context?
+## 9. What is the difference between R^2 and adjusted R^2?
+## 10. How can you interpret R^2 in the multiple linear regression model.
+
+# Reading: Stock & Watson 6.5-6.7 
+## 11. Can we ever be sure that the first assumption of multiple linear regression holds without randomization?
+## 12. The second and third assumption are essentially the same as in the single variable case, what is the fourth assumption?
+## 13. Why is it not so surprising that the central limit theorem applies in the multiple linear regression case?
+## 14. The most common cause of perfect multicollinearity is the dummy variable trap. What is the dummy variable trap?
+## 15. Why is imperfect multicollinearity a problem? Is it a problem if we have a large enough sample size? Use the variance formula in your answer.
+## 16. Look up the Frisch Waugh lovell theorem on google. What is this theorem?
+## 17. How does this demonstrate the held constant principle of multiple linear regression?
+
+
+# Readings: Stock & Watson Chapter 7.1-7.4
+## 1. Is there anything especially different about testing a single estimate hypothesis in a multivariate model?
+## 2. Is there anything especially different about creating a single estimate confidence interval in a multivariate model?
+## 3. What would be the correct interpretation of an f-test on the set of regressors in a model?
+## 4. Why is it not appropriate to jointly test that every estimate is equal to zero but individually testing each estimate with a t-test?
+## 5. How many sets of degrees of freedom are involved in a f-statistic?
+## 6. Why might you want to test the hypothesis that two regression coefficients are equal?\
+## 7. Why might you want to construct a confidence set?
+
