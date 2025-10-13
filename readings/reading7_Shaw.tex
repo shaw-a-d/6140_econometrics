@@ -1,0 +1,199 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Reading Assignment 7},
+  pdfauthor={Andrew Shaw},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Reading Assignment 7}
+\author{Andrew Shaw}
+\date{2025-10-12}
+
+\begin{document}
+\maketitle
+
+\section{Angrist \& Pischke Chapter 2}\label{angrist-pischke-chapter-2}
+
+\subsection{1. What is the ingenious matching exercise in table 2.1? Why
+can we do this and forget about ALL possible omitted
+variables?}\label{what-is-the-ingenious-matching-exercise-in-table-2.1-why-can-we-do-this-and-forget-about-all-possible-omitted-variables}
+
+By taking all observations in where there is uniformity across
+measurable characteristics so that each subgroup can be compared while
+looking only at the variable of interest's effect on the dependent
+outcome thereby reduce any influence from other characteristics on the
+outcome. Then subgroups can then be compared using weights depending on
+the size of those subgroups. This is a ceteris paribus situation so that
+comparisons are more like-with-like.
+
+\subsection{2. Why would it not have been prudent to compare students in
+Group A to those in Group
+D?}\label{why-would-it-not-have-been-prudent-to-compare-students-in-group-a-to-those-in-group-d}
+
+The question being posed is whether a private school education has an
+effect on outcome later in life. Tho students in group D were all of the
+control group having only been accepted to public schools so there is no
+private school effect to try and isolate within group let alone across
+groups to group A.
+
+\subsection{3. Why does all of the weight of the regression to compare
+public to private rest on the effects in Group A and B and none of the
+weight come from comparisons within group C and group
+D?}\label{why-does-all-of-the-weight-of-the-regression-to-compare-public-to-private-rest-on-the-effects-in-group-a-and-b-and-none-of-the-weight-come-from-comparisons-within-group-c-and-group-d}
+
+Again for similar reasons above, the two groups only offer information
+about either the control or the treatment group and thus there is no
+comparison to be made regarding benefits of private education.
+
+\subsection{4. Why are the weights different in regression than you'd
+think they might be if you look at simply the number of observations in
+the
+group?+}\label{why-are-the-weights-different-in-regression-than-youd-think-they-might-be-if-you-look-at-simply-the-number-of-observations-in-the-group}
+
+The addition of the group variable in the regression means the weight no
+looks within group at the variation between private and public schools
+not across group so the simple average is no longer sufficient for
+weighting.
+
+\subsection{5. What does transform the left-hand side of an equation by
+taking the natural log do to the beta�s on the right-hand
+side?}\label{what-does-transform-the-left-hand-side-of-an-equation-by-taking-the-natural-log-do-to-the-betas-on-the-right-hand-side}
+
+This changes the interpretation of the coefficient to represent a
+percentage change in the dependent variable for a one unit change in the
+regressor.
+
+\subsection{6. How can I use regression to get the price elasticity of
+demand explicitly from regression
+output?}\label{how-can-i-use-regression-to-get-the-price-elasticity-of-demand-explicitly-from-regression-output}
+
+Tranform both the dependent variable and the regressor into natural log
+format and then interpretation of the beta coefficient now becomes the
+elasticity.
+
+\subsection{7. What can we learn from table 2.2. Explain the results in
+detail? Does private school matter as much as many assume it
+does?}\label{what-can-we-learn-from-table-2.2.-explain-the-results-in-detail-does-private-school-matter-as-much-as-many-assume-it-does}
+
+As more variables are included in the model and effects are isolated,
+the private school premium continues to decline while remaining
+stastistically significant.
+
+\subsection{8. Explain why we might be looking at a limited set here?
+What are the public schools included and how might they compare to other
+public
+schools?}\label{explain-why-we-might-be-looking-at-a-limited-set-here-what-are-the-public-schools-included-and-how-might-they-compare-to-other-public-schools}
+
+Because we're only looking at schools featured in the Barron's list of
+selectivity.
+
+\section{9. Why might table 2.4 shed a little more light on the
+problem?}\label{why-might-table-2.4-shed-a-little-more-light-on-the-problem}
+
+Table shifts to looking at the campus-wide avg. SAT score of students
+which is continuous as opposed to a binary variable of private v.
+public. The binary variable captures a lot of information that isn't
+necessarily specific to private schools.
+
+\subsection{10. We can't have all omitted variables? Why does
+sensitivity analysis give us greater confidence that we haven't omitted
+anything
+important?}\label{we-cant-have-all-omitted-variables-why-does-sensitivity-analysis-give-us-greater-confidence-that-we-havent-omitted-anything-important}
+
+By comparing two models, one with a robust amount of controls and
+simpler model, the difference in the beta of the regressor of interest
+doesn't reveal a drastic difference there is unlikely a missing variable
+that could cause large fluctuations.
+
+\subsection{11. How can we quantify the omitted variable bias
+differences when we include key controls compared to when we omit key
+controls?}\label{how-can-we-quantify-the-omitted-variable-bias-differences-when-we-include-key-controls-compared-to-when-we-omit-key-controls}
+
+Take the \(\hat{\beta_S} - \hat{\beta_L} = \deltaOVB\). There are other
+robustness checks which can be run as well, this being the most basic.
+
+\subsection{12. Describe from table 2.5 what we can learn about omitted
+variable bias in this
+context?}\label{describe-from-table-2.5-what-we-can-learn-about-omitted-variable-bias-in-this-context}
+
+The table shows that earnings gap resulting from attending private
+school was actually bias coming from family background (parental income)
+and SAT scores of individuals.
+
+\subsection{13. Why might we still have omitted variable bias despite
+our
+calculations?}\label{why-might-we-still-have-omitted-variable-bias-despite-our-calculations}
+
+The calculations only describe how sensitive the coefficients are to
+hypothetical missing variables so there could be additional OVB not
+considered in the model.
+
+\subsection{14. What is regression to the mean? How was it found as a
+phenomenon?}\label{what-is-regression-to-the-mean-how-was-it-found-as-a-phenomenon}
+
+It's a stastistical property of correlated pairs of variables discovered
+when Galton studied heights of fathers and sons and compared to average
+height of population. He noticed that shorter than average parents tend
+to have slightly taller children and taller than average parents have
+slightly shorter children.
+
+\end{document}

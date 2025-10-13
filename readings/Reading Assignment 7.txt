@@ -1,0 +1,20 @@
+Angrist & Pischke Chapter 2 : 2.1-2.3
+1. What is the ingenious matching exercise in table 2.1? Why can we do this and possibly forget about ALL possible omitted variables?
+
+2. Why would it not have been prudent to compare students in Group A to those in Group D?
+
+3. 
+
+4. Why are the weights different in regression than you�d think they might be if you look at simply the number of observations in the group?
+5. What does transform the left-hand side of an equation by taking the natural log do to the beta�s on the right-hand side?
+6. How can I use regression to get the price elasticity of demand explicitly from regression output?
+7. What can we learn from table 2.2. Explain the results in detail? Does private school matter as much as many assume it does? 
+8. Explain why we might be looking at a limited set here? What are the public schools included and how might they compare to other public schools?
+9. Why might table 2.4 shed a little more light on the problem?
+10. We can�t have all omitted variables? Why does sensitivity analysis give us greater confidence that we haven�t omitted anything important?
+11. How can we quantify the omitted variable bias differences when we include key controls compared to when we omit key controls?
+12. Describe from table 2.5 what we can learn about omitted variable bias in this context?
+13. Why might we still have omitted variable bias despite our calculations?
+14. What is regression to the mean? How was it found as a phenomenon?
+
+
