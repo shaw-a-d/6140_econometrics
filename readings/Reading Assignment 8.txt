@@ -1,1 +1,45 @@
-Cunningham DAGÕs 1.	What is a backdoor path?2.	What is the difference between a closed and open backdoor path?3.	What is a collider variable?4.	Why shouldnÕt you control for colliders?5.	Right down a DAG for the following variables on infant mortality using your own intuition: fertility drugs, number of fetuses in pregnancy (plurality), birth month, low birth weight, use of inducement drugs.6.	Which variables should you control for if you want to know the effect of fertility on infant mortality?7.	What about inducement drugs?8.	Right down a DAG for the following variables on teen fertility: parentÕs education, contraceptive use, whether the teen goes to college.9.	We want to know to what parentÕs education effects teen fertility, should we control for whether the teen goes to college?10.	We want see if thereÕs a relationship between gun ownership and gun related deaths. We have the following variables at hand, person iÕs gun ownership, average violence in person iÕs community, average drug sales in personÕs IÕs community, person IÕs education level, average education level of person IÕs community, and person IÕs mental health. Build a DAG to map out the relationship between gun ownership and person I suffering a gun related death.11.	We want to see how wages in a city effects whether or not someone immigrates to that city. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?12.	YouÕre doing a market analysis about how price/earnings ratio effects long term profits of a company. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?13.	You want to test how economic activity effects fertility. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?14.	You want to know how ad spending effects political candidatesÕ chances of winning.   What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?15.	You want to test how stimulus spending effect economic activity. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?16.	You want to test how SAT scores effect the ranking of college accepted to. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+Cunningham DAGï¿½s 
+1.	What is a backdoor path?
+2.	What is the difference between a closed and open backdoor path?
+3.	What is a collider variable?
+4.	Why shouldnï¿½t you control for colliders?
+5.	Write down a DAG for the following variables on infant mortality using your own intuition: 
+fertility drugs, number of fetuses in pregnancy (plurality), birth month, low birth weight, use of 
+inducement drugs.
+6.	Which variables should you control for if you want to know the effect of fertility on infant 
+mortality?
+7.	What about inducement drugs?
+8.	Write down a DAG for the following variables on teen fertility: parentï¿½s education, contraceptive 
+use, whether the teen goes to college.
+9.	We want to know to what parentï¿½s education effects teen fertility, should we control for 
+whether the teen goes to college?
+10.	We want see if thereï¿½s a relationship between gun ownership and gun related deaths. We have 
+the following variables at hand, person iï¿½s gun ownership, average violence in person iï¿½s 
+community, average drug sales in personï¿½s Iï¿½s community, person Iï¿½s education level, average 
+education level of person Iï¿½s community, and person Iï¿½s mental health. Build a DAG to map out 
+the relationship between gun ownership and person I suffering a gun related death.
+
+11.	We want to see how wages in a city effects whether or not someone immigrates to that city. 
+What variables would you include in this model? Based on the variables you choose, write a 
+DAG and what controls would you include?
+
+12.	Youï¿½re doing a market analysis about how price/earnings ratio effects long term profits of a 
+company. What variables would you include in this model? Based on the variables you choose, 
+write a DAG and what controls would you include?
+
+13.	You want to test how economic activity effects fertility. What variables would you include in this 
+model? Based on the variables you choose, write a DAG and what controls would you include?
+
+14.	You want to know how ad spending effects political candidatesï¿½ chances of winning.   What 
+variables would you include in this model? Based on the variables you choose, write a DAG and 
+what controls would you include?
+
+15.	You want to test how stimulus spending effect economic activity. What variables would you 
+include in this model? Based on the variables you choose, write a DAG and what controls would 
+you include?
+
+16.	You want to test how SAT scores effect the ranking of college accepted to. What variables would 
+you include in this model? Based on the variables you choose, write a DAG and what controls 
+would you include?
+
+
