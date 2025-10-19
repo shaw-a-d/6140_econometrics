@@ -71,7 +71,6 @@ abs(bias_binned / bias_naive) * 100
 
 # Using data from the birth records in 2017
 rm(list = ls())
-library(dplyr)
 load("/Users/andrewshaw/Documents/GitHub/6140_econometrics/data/samplebirth2017.RData")
 df <- samp
 

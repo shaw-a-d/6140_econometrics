@@ -10,7 +10,7 @@ Above I've simulated data based on y being a function of x1, x2, and e
 
 
 ## Problem 1: Using the formula for single variate models (covariances and variances) estimate a model y that's based only on x1.
-```{r model_x1}
+```{r bias}
 
 ```
 
