@@ -1,5 +1,6 @@
 ---
 title: "Reading Assignment 8"
+author: "Andrew Shaw"
 date: "2025-10-18"
 output: 
   pdf_document: default
@@ -9,26 +10,270 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggdag)
+library(ggplot2)
 ```
 
-## GitHub Documents
+## 1. What is a backdoor path?
+A path which can be open or closed is a variable in a model that introduces additional pathways from the treatment variable to the outcome variable potentially introducing complications if left open are akin to omitted variable bias if not controlled for.
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+## 2. What is the difference between and open and closed backdoor path?
+Open backdoors are confounder variables in which the direction of influence flows from a change in the $X$ confounder affects both the treatment group $D$ and outcome $Y$. A closed backdoor is a collider variable where the changes in $D$ and $Y$ affect the $X$ collider but that change does not affect the $D \rightarrow Y$ relationship. 
 
-## Including Code
+## 3. What is a collider variable?
+A variable in which the $D$ and $Y$ casual effects collide in the collider variable which has no bearing on the causal relationship between $D$ and $Y$. 
 
-You can include R code in the document as follows:
+## 4. Why shouldn't you control for colliders?
+Through controlling for a collider variable and not allowing to freely change with changes in $D$ and $Y$ the model is constrained forcing $D$ and $Y$ to counterbalance while the collider is fixed creating a relationship between $X$ and the treatment and outcome variables that didn't exist before conditioning. 
 
-```{r cars}
-summary(cars)
+## 5. Write down a DAG for the following variables on infant mortality using your own intuition: 
+fertility drugs, number of fetuses in pregnancy (plurality), birth month, low birth weight, use of inducement drugs.
+
+```{r infant mortality DAG, echo = TRUE}
+mortality <- dagify(y ~ m,
+                           y ~ l,
+                           l ~ p,
+                           p ~ fd,
+                           i ~ p,
+                           i ~ l, 
+                           y ~ p,
+                           y ~ i,
+                           labels = c(fd = "Fertility\nDrugs",
+             p = "Plurality",
+             l = "Low Birth\nWeight",
+             y = "Infant\nMortality",
+             m = "Birth Month",
+             i = "Inducement\nDrugs"))
+
+                         
+ggdag(mortality, text = FALSE, edge_type = "arc", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "y", "outcome",
+                                 ifelse(name == "fd", "treatment", "other"))),
+                 shape = 21, size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+## 6. Which variables should you control for if you want to know the effect of fertility on infant mortality?
+If testing for effect of fertility drugs on infant mortality, there doesn't seem to be a variable confounding the treatment group of fertility drugs.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## 7. What about inducement drugs?
+To see the relationship between inducement drugs on fertility, $Plurarlity$ and $Low Birth Weight$ need to be controlled for so their fluctuations do not influence the variable's effect on mortality.
+
+## 8. Write down a DAG for the following variables on teen fertility, parent's education, contraceptive use, whether the teen goes to college.
+
+```{r teen fertility, echo = FALSE}
+teen_fertility <- dagify(y ~ c,
+                                col ~ pe,
+                                c ~ pe,
+                                y ~ pe,
+                                y ~ col,
+                                col ~ c,
+                                
+                                labels = c(col = "College",
+                                           y = "Teen\nFertility",
+                                           pe = "Parent's\nEducation",
+                                           c = "Contraceptive\nUse"))
+ggdag(teen_fertility, text = FALSE, edge_type = "link", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "y", "outcome",
+                                 ifelse(name == "c", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## 9. We want to know to what parent's education effects teen fertility, should we control for whether the teen goes to college?
+No, because whether the teen goes to college or not is a mediator variable that also effects $Teen\; Fertility$. If the goal is to observe the direct effect of $Parent's\;Education$ on fertility then condition on $College$, otherwise leave untouched.
+
+## 10.	We want see if there’s a relationship between gun ownership and gun related deaths. We have the following variables at hand, person i’s gun ownership, average violence in person i’s community, average drug sales in person’s I’s community, person I’s education level, average education level of person I’s community, and person I’s mental health. Build a DAG to map out the relationship between gun ownership and person i suffering a gun related death.
+
+```{r guns, echo = FALSE}
+library(ggdag)
+guns <- dagify(y ~ d + mh + v,
+               d ~ v + ed + mh + dr,
+               v ~ aved + dr,
+               dr ~ aved,
+               ed ~ aved,
+               mh ~ ed,
+               labels = c(y = "Gun-related\nDeath",
+                          d = "Gun\nOwnership",
+                          mh = "Mental\nHealth",
+                          v = "Avg\nViolence",
+                          ed = "Education",
+                          aved = "Avg.\nEducation",
+                          dr = "Drug Sales"))
+ggdag(guns, text = FALSE, edge_type = "link", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "y", "outcome",
+                                 ifelse(name == "d", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+
+```
+
+## 11. We want to see how wages in a city effects whether or not someone immigrates to that city. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+Here controls are needed for population, public transportation quality, crime rates, and job openings.
+
+```{r wages, echo = FALSE}
+wages <- dagify(y ~ wages + tran + job + pop + house,
+                wages ~ tran + pop + crime +house + job,
+                house ~ tran + pop + crime,
+                job ~ pop,
+                tran ~ pop,
+                labels = c(y = "Immigration",
+                            wages = "Hourly\nWages",
+                            house = "Housing\nCost",
+                            job = "Job\nOpenings",
+                            crime = "Crime\nRate",
+                            pop = "Population",
+                            tran = "Public\nTransportation"))
+ggdag(wages, text = FALSE, edge_type = "arc", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "y", "outcome",
+                                 ifelse(name == "wages", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+```
+
+## 12.	You’re doing a market analysis about how price/earnings ratio effects long term profits of a company. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+
+Controls are needed for market cap, EBITDA, and the risk profile (beta). 
+
+```{r market analysis, echo = FALSE}
+market <- dagify(y ~ beta + cap + pe + age + ebit,
+                 pe ~ beta + ebit + cap,
+                 beta ~ age,
+                 ebit ~ beta + cap,
+                labels = c(y = "Long-term\nProfit",
+                           pe = "P/E\nratio",
+                           ebit = "EBITDA",
+                           beta = "Risk\nProfile",
+                           cap = "Market\nCap",
+                           age = "Age of\nFirm"))
+ggdag(market, text = FALSE, edge_type = "link", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "y", "outcome",
+                                 ifelse(name == "pe", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+```
+
+## 13.	You want to test how economic activity effects fertility. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+
+If household income is set as the treatment group, the required controls are for debt-to-savings ratio and average hours worked per week. 
+
+```{r econ activity, echo = FALSE}
+econ <- dagify(fert ~ inc,
+                 home ~ inc,
+                 inc ~ hours,
+                 inc ~ ds,
+                 fert ~ hours,
+                 fert ~ home,
+                 ds ~ home,
+                labels = c(inc = "Household\nIncome",
+                           fert = "Fertility",
+                           home = "Home\nOwnership",
+                           ds = "Debt to\nSavings",
+                           hours = "Avg. Weekly\nHours"
+                           ))
+ggdag(econ, text = FALSE, edge_type = "arc", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "fert", "outcome",
+                                 ifelse(name == "inc", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+```
+
+## 14.	You want to know how ad spending effects political candidates’ chances of winning.   What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+
+Candidate quality, competitiveness, and opponent spending require controls. 
+
+```{r politics, echo = FALSE}
+politics <- dagify(chance ~ ad + opp + comp + qual,
+                   ad ~ comp + qual + opp,
+                   type ~ ad + comp + qual,
+                labels = c(ad = "Ad\n Spending",
+                           chance = "Chance of\nWinning",
+                           qual = "Candidate\nQuality",
+                           type = "Message\nType",
+                           comp = "Competitiveness",
+                           opp = "Opponent\nSpending"
+                           ))
+ggdag(politics, text = FALSE, edge_type = "link", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "chance", "outcome",
+                                 ifelse(name == "ad", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+```
+
+## 15.	You want to test how stimulus spending effect economic activity. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+
+Using the $PCE$, personal consumption expenditures as the gauge for economic activity, there are no controls required for this model. 
+
+```{r stimulus, echo = FALSE}
+stim <- dagify(pce ~ cred + stim + sp + del,
+                   cred ~ stim,
+                   sp ~ stim,
+                   del ~ stim,
+                labels = c(stim = "Stimulus",
+                           pce = "PCE",
+                           cred = "Change in\nCredit",
+                           del = "Delinquency\nRates",
+                           sp = "Change in\nSP500"
+                           ))
+ggdag(stim, text = FALSE, edge_type = "arc", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "pce", "outcome",
+                                 ifelse(name == "stim", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+
+```
+
+
+
+## 16.	You want to test how SAT scores effect the ranking of college accepted to. What variables would you include in this model? Based on the variables you choose, write a DAG and what controls would you include?
+
+All three variables require controls to isolate the effects of an individuals SAT scores on a college's rank. 
+
+```{r SAT, echo = FALSE}
+sat <- dagify(rank ~ gpa,
+              sat ~ gpa,
+              rank ~ pi,
+              sat ~ pi,
+              rank ~ high,
+              sat ~ high,
+              rank ~ sat,
+                labels = c(sat = "SAT Scores",
+                           rank = "College\nRank",
+                           gpa = "High\nSchool\nGPA",
+                           pi = "Parent's\nIncome",
+                           high = "High\nSchool\nQuality"
+                           ))
+ggdag(sat, text = FALSE, edge_type = "arc", layout = "sugiyama") +
+  geom_dag_point(aes(fill = ifelse(name == "sat", "outcome",
+                                 ifelse(name == "rank", "treatment", "other"))), shape = 21,
+                 color = "black", size = 18) +
+  geom_dag_text(aes(label = label), size = 2, color = "black") + 
+  scale_fill_manual(values = c(treatment = "skyblue", outcome = "lightcoral", other = "grey"), guide = "none") +
+  theme_dag()
+```
+
+
+
+
+
+
+
+
