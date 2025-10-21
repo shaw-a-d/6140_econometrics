@@ -1,0 +1,13 @@
+---
+title: "Reading Assignment 9"
+author: "Andrew Shaw"
+date: "2025-10-22"
+output: 
+  pdf_document: default
+  word_document: default
+---
+
+# Angrist & Pischke: Chapter 3
+
+## 1. 
+
