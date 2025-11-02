@@ -10,21 +10,31 @@ output:
 # Angrist & Pischke Chapter 4
 
 ## 1. What is a running variable?
+It is the continuous variable that determines treatment after a determined cutoff typically selected where there is some jump observed in outcome given 
 
 ## 2. How is a cutoff determined?
+Determined by some institutional rule or natural threshold which changes in treatment assignment are observed. It's an exogenous threshold. 
 
 ## 3. Why can't you simply run a regresion where you get the outcome as a function of a dummy for whether an observation falls above or below a running variable? 
+A broad regression with a simple dummy must still contend with OVB whereas RD is a more refined look at the data focusing in on known causal relationship of the running variable causing the change of treatment assignment. 
 
 ## 4. How can you model a RD relationship? 
+There needs to be the treatment variable dummy denoting the on/off treatment status of the running variable being tested as well as at least another term capturing the relationship between the outcome and the difference of the observed running variable and the cutoff to smooth the relationship of X and Y. 
 
 ## 5. What are critical features of a good sharp RD?
+It's critical to have two terms, linear or polynomial, that model the data before and after the cutoff to observe the changes in slopes and the discontinuity. 
 
-## 6. Why might you watn to look at characteristics as a function of the RD relationship?
+## 6. Why might you want to look at characteristics as a function of the RD relationship?
+Including other characteristics in the model can improve precision in the model if the covariates barely change the discontinuity coefficient or it could inform that the hypothesized treatment rule isn't causing the change in treatment status. 
 
 ## 7. Why might a linear relationship be sufficient to capture the shape of the relationship between the outcome and the running variable?
+Because the question at hand is around the cutoff which is a small slice of the total data so it's essentially local average treatment effect. 
 
 ## 8. What is a fuzzy RD?
+Uses the change in probability to identify the treatment effect by first measuring the proportion of change in treatment in first stage then using that as an instrument to measure how much the outcome jumps at cutoff. 
 
 ## 9. Are all RD designs good IVs?
+No, RD is more likely to break the exclusion restriction required for valid IV. 
 
 ## 10. What things could go wrong with RD designs?
+If the bandwidth is too narrow there is not enough data near the cutoff where precision is lost or there could be other variables that also jump at the cutoff other than the selected running variable. 
