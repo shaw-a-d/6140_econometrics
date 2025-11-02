@@ -2,9 +2,8 @@
 title: "Reading Assignment 10"
 author: "Andrew Shaw"
 date: "2025-11-01"
-output:
-  pdf_document: default
-  word_document: default
+output: pdf_document
+
 ---
 
 # Angrist & Pischke Chapter 4
