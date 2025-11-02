@@ -1,0 +1,30 @@
+---
+title: "Reading Assignment 10"
+author: "Andrew Shaw"
+date: "2025-11-01"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+# Angrist & Pischke Chapter 4
+
+## 1. What is a running variable?
+
+## 2. How is a cutoff determined?
+
+## 3. Why can't you simply run a regresion where you get the outcome as a function of a dummy for whether an observation falls above or below a running variable? 
+
+## 4. How can you model a RD relationship? 
+
+## 5. What are critical features of a good sharp RD?
+
+## 6. Why might you watn to look at characteristics as a function of the RD relationship?
+
+## 7. Why might a linear relationship be sufficient to capture the shape of the relationship between the outcome and the running variable?
+
+## 8. What is a fuzzy RD?
+
+## 9. Are all RD designs good IVs?
+
+## 10. What things could go wrong with RD designs?
