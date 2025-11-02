@@ -1,0 +1,39 @@
+---
+title: "Reading Assignment 9"
+author: "Andrew Shaw"
+date: "2025-10-22"
+output: 
+  pdf_document: default
+  word_document: default
+---
+
+# Angrist & Pischke: Chapter 3
+
+## 1. What are the three requirements for instruments to be valid?
+1. The instrument must have a causal effect on the variable whose effects are being captured. 
+2. The instrument is independent of any omitted variables that might be controlled for. 
+3. IV requires an exclusion restriction defined as a single channel through which the instrument affects the outcomes.
+
+## 2. What kind of relationships are we uncovering as it relates to DAGs?
+Introducing an instrument provides a new chain through which to view the relationship of X and Y without the influence of omitted variables by looking at the instruments effects on X and how Y adjusts to those changes. 
+
+## 3. Explain the logic behind equation (3.1). 
+Algebraically it's taking the the regression coefficients in the new causal chain in which the effect is standardized by the same variance of the instrument and rearranging what's left is the relationship of X on Y. 
+
+## 4. What is the first stage?
+This creates the new causal link from the instrument to causal variable of interest measuring how the instruments moves the treatment. 
+
+## 5. What is the reduced form? 
+Reduced form is the instrument's direct effect on the outcome variable but it's not a confounder because it only affects the outcome through the changes in the treatment. 
+
+## 6. Why do we call an instrumental effect a local average treatment effect?
+It's called the treatment effect because it only applies to those observations who treatment status changed because of the instrument making it 'local' to that population. 
+
+## 7. Explain never-takers, always-takers, compliers, and defiers. 
+These are the subpopulations created when introducing IV. The group of interest are the compliers as their treatment status changes because of the instrument whereas the never and always-takers do not change. Defiers always do the opposite of Z and are ruled out by an assumption of monotonicity. 
+
+## 8. Who are we observing the effect among? 
+The compliers because the fact their treatment status changes by introducing the instrument, the changes in X because of Z and separately the changes in Y because of Z are measured and compared.
+
+## 9. If there are defiers how does this change our interpretation of instrumental variables? 
+This obscures the relationsihp offsetting the compliers' genuine response to the instrument canceling out their effect. Compliers change treatment status because of the instrument while defiers change in spite of the introduction of the instrument.

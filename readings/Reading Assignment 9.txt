@@ -1,0 +1,10 @@
+Angrist & Pischke Chapter 3
+1. What are the three requirements for instruments to be valid?
+2. What kind of relationship are we uncovering as it relates to DAGs?
+3. Explain the logic behind equation (3.1).
+4. What is the first stage?
+5. What is the reduced form?
+6. Why do we call an instrumental effect a local average treatment effect?
+7. Explain never-takers, always-takers, compliers and defiers.
+8. Who are we observing the effect among?
+9.  If there are defiers how does this effect our interpretation of instrumental variables? 
