@@ -1,0 +1,38 @@
+install.packages("ivreg", dependencies = TRUE)
+library(ivreg)
+
+#Simulating data
+set.seed(1942)
+n=1000000
+Zpre=runif(n, min = 0, max = 1)
+Z=ifelse(Zpre>=0.5,1,0)
+error1=rnorm(n,0,0.1)
+split=runif(n,min=0,max=1)
+Xsplit=split
+
+complier=ifelse(Xsplit<0.6,1,0)
+always=ifelse(Xsplit>=0.6 & Xsplit<0.8,1,0)
+never=ifelse(Xsplit>=0.8 & Xsplit<0.90,1,0)
+defier=ifelse(Xsplit>=0.99,1,0)
+D=ifelse((Z==1 & complier==1) | (always==1) | (Z==0 & defier==1),1,0)
+error2=rnorm(n,0,0.05)
+y=ifelse(complier==1,0.2+0.03*D+0.01*Xsplit+error2,0.1+0.01*D+0.01*Xsplit+error2)
+mydata<-data.frame(y,D,Z,complier)
+
+
+
+
+
+#Problem 1: Without estimating what is the effect of Z on D? Is this relationship causal? Why or why not?
+
+
+#Problem 2: Now estimate the reduced form estimate of Z on y using lm() function. Is this relationship causal? Why or why not?
+
+
+#Problem 3: Use the function ivreg to estimate the relationship between D and y. Is this relationship causal? Why or why not?
+
+
+#Problem 4: What happens to the estimate as the percent of defiers grows?
+
+
+#Problem 5: We somehow have information about who is a complier. If we control for complier group and restimate the ivreg from problem 3, what happens? If we limit to only complier group what happens? Is no/one/or both causal? Explain.
