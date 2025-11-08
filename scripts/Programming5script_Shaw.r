@@ -5,7 +5,7 @@ library(ggplot2)
 
 # Simulating data
 set.seed(1942)
-n <- 1000000we 
+n <- 1000000
 Zpre <- runif(n, min = 0, max = 1)
 Z <- ifelse(Zpre >= 0.5, 1, 0)
 error1 <- rnorm(n, 0, 0.1)
@@ -21,7 +21,16 @@ error2 <- rnorm(n, 0, 0.05)
 y <- ifelse(complier == 1, 0.2 + 0.03 * D + 0.01 * Xsplit + error2, 0.1 + 0.01 * D + 0.01 * Xsplit + error2)
 mydata <- data.frame(y, D, Z, complier)
 
+fs <- lm(D ~ Z, data = mydata)
+fs
+head(mydata)
 
+head(fitted(fs))
+
+reduced <- lm(y ~ fitted(fs), data = mydata)
+
+reduced
+ivreg(y ~ D | Z, data = mydata)
 # Let's say Z is a firm randomly offer a voucher for training where 1 = offered and 0 = not offered #nolint
 
 # D is whether or not the person actually attended the training
