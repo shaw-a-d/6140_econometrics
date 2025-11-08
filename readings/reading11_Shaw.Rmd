@@ -6,19 +6,30 @@ output: pdf_document
 ---
 
 ## 1. How would you define the pre-period? 
+The pre-period establishes the parallel trends assumption required for DD and helps to provide the counter-factual basis for what would have happened in the absence of treatment if the original trends held.
+In Mastering Metrics, this is the period before the Caldwell collapse in 1930. 
 
 ## 2. How would you define the post-period? 
+The post-period is what happens after the shock or in response to the shock that sees trends of one group diverge away from the trend so when the treatment turns on. 
+In the Caldwell case it's the period after 1931 when monetary policy response differs between the two Fed banks. 
 
 ## 3. Who is the treated group? 
+The treated group is the group in which the deviation from the trend is observed. For the Caldwell case this is the district where monetary policy loosened from the 6th district. 
 
 ## 4. Who is the control group?
+Control is the group used as the counter-factual example where policy or shock appears to have had no change in trend. This is the 8th district in the Caldwell case. 
 
 ## 5. What are the assumptions of difference-in-difference?
+There must be parallel trends before in the treatment and control groups before the intervention. 
 
 ## 6. Why do we look at trends of the difference between treatment and control?
+Differencing out removes factors that are common to both treatment and control so only effect unique to treatment is left. 
 
 ## 7. What is multi-state DD?
+Takes the DD logic and applies it to changes of control and treatment groups in a pre- and post-period. 
 
 ## 8. What do the state and year fixed effects do? 
+They create dummy variables for years and states so the model looks at changes within each state hold other states constant over the years. Once these averages are taken the model is left with just the treatment effects. 
 
 ## 9. What are threats to valid DD studies?
+Not identifying or accounting for other factors that could have a causal effect on the treatment group would muddy causal inference. This causes parallel trend assumption to fail. 
