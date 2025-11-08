@@ -5,3 +5,20 @@ date: "2025-11-08"
 output: pdf_document
 ---
 
+## 1. How would you define the pre-period? 
+
+## 2. How would you define the post-period? 
+
+## 3. Who is the treated group? 
+
+## 4. Who is the control group?
+
+## 5. What are the assumptions of difference-in-difference?
+
+## 6. Why do we look at trends of the difference between treatment and control?
+
+## 7. What is multi-state DD?
+
+## 8. What do the state and year fixed effects do? 
+
+## 9. What are threats to valid DD studies?
